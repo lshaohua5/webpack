@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>pushplay</title>
+    <script
+      type="text/javascript"
+      src="./EXEStarter.js"
+      charset="utf-8"
+    ></script>
+  </head>
+
+  <body onload="initSDK();" onunload="uninitSDK();">
+    <script>
+      // 初始化
+      function initSDK() {
+        PushPlay.setListener({
+          onRecvEvent: function(cmd) {
+            var eventID = cmd.eventID;
+            if (cmd.eventID == 1012 || cmd.eventID == 2010) {
+              var temp = cmd;
+              if (temp.params[0].value == 0) {
+                var path = temp.params[1].value;
+                var tempPath = path;
+
+                var element = document.getElementById("testImg");
+                element.src = "data:image/jpeg;base64," + temp.params[2].value;
+              }
+            }
+          }
+        });
+      }
+
+      function uninitSDK() {
+        PushPlay.unload();
+      }
+
+      function pageReload() {
+        window.location.reload();
+      }
+
+      function isRtmpUrl(strUrl) {
+        var temp = "rtmp";
+        return strUrl.indexOf(temp) >= 0;
+      }
+
+      function createSession(pushUrl, playUrl) {
+        if (pushUrl == "" || isRtmpUrl(pushUrl) == false) {
+          alert("请输入正确拉流url");
+          return;
+        }
+        if (playUrl == "" || isRtmpUrl(playUrl) == false) {
+          alert("请输入正确拉流url");
+          return;
+        }
+        PushPlay.startEXE({
+          data: {
+            type: "CustomServiceLive",
+            pushURL: pushUrl,
+            playURL: playUrl,
+            title: "数字化理赔平台",
+            logoUrl:
+              "http://liteavsdk-1252463788.cosgz.myqcloud.com/windows/Cpp/logo/doubleroom_logo.png"
+          },
+          custom: {
+            //可选参数
+            https_SSLPort: 9987
+          },
+          success: function(ret) {},
+          fail: function(ret) {
+            if (ret.errCode == -1) {
+              recordErrorCode(0, makeStr(10241024, "座席端视频插架唤起失败"));
+              alert("exe未安装");
+            }
+          }
+        });
+      }
+
+      function destroySession() {
+        PushPlay.stopEXE();
+      }
+
+      function addPusher(playUrl) {
+        PushPlay.addPusher({ data: { url: playUrl } });
+      }
+
+      function delPusher(playUrl) {
+        PushPlay.delPusher({ data: { url: playUrl } });
+      }
+
+      function makeStr(id, str) {
+        return "状态码" + id + "," + str;
+      }
+    </script>
+  </body>
+</html>
