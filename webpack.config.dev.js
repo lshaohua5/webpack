@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
+  mode:'development',
   entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -67,6 +68,24 @@ module.exports = {
           "css-loader",
           "sass-loader",
           "postcss-loader"
+        ]
+      },
+      // html raw-loader
+      {
+        test:/\.html$/,
+        use:[
+          {
+            loader:'file-loader',
+            options:{
+              name:"[name].html"
+            }
+          },
+          // {
+          //   loader:'extract-loader'
+          // },
+          // {
+          //   loader:'html-loader'
+          // }
         ]
       }
     ]

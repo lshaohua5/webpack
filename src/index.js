@@ -1,3 +1,2 @@
 import VideoPopup from "@js/videopopup";
-
-export default VideoPopup;
+export default VideoPopup.init();

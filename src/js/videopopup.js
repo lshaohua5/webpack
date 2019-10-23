@@ -1,5 +1,7 @@
 import TEMPLATE from "./template";
-
+import pushplay from "@lib/pushplay.html"
+console.log(pushplay)  
+// require('@lib/pushplay.html')
 let VideoPopup = {
   init() {
     let body = document.getElementsByTagName("body");
@@ -8,7 +10,7 @@ let VideoPopup = {
         first = document.body.firstChild;
       iframe.setAttribute("id", "pushplay");
       iframe.setAttribute("style", "display: none");
-      iframe.setAttribute("src", "../lib/pushplay.html");
+      iframe.setAttribute("src", pushplay);
       document.body.insertBefore(iframe, first);
     }
     let videopopup = document.createElement("div");
