@@ -2,11 +2,12 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
+
 module.exports = {
-  entry: './src/index',
+  entry: './src/index.js',
   output: {
-    name: path.resolve(__dirname, 'dist'),
-    fileName: '[name].[hash:8].js'
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].[hash:8].js'
   },
   module: {
     rules: [
